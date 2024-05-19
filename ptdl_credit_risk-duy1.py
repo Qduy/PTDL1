@@ -492,59 +492,41 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
-# Function to perform frequency encoding
-def frequency_encoding(data, column):
-    frequency_map = data[column].value_counts(normalize=True)
-    data[column + '_freq_encoded'] = data[column].map(frequency_map)
-    return data
+import pickle
 
-instances_to_predict = pd.DataFrame({
-    'person_age': [15],
-    'person_income': [1000],
-    'person_home_ownership': ['RENT'],
-    'person_emp_length': [8],
-    'loan_intent': ['HOMEIMPROVEMENT'],
-    'loan_amnt': [5500],
-    'loan_int_rate': [12.87],
-    'loan_status': [0],
-    'loan_percent_income': [0.46],
-    'cb_person_default_on_file': ['N'],
-    'cb_person_cred_hist_length': [10]
-})
-# Columns to be frequency encoded
-columns_to_encode = ['person_age', 'person_income', 'person_home_ownership',
-       'person_emp_length', 'loan_intent', 'loan_amnt', 'loan_int_rate',
-       'loan_status', 'loan_percent_income', 'cb_person_default_on_file',
-       'cb_person_cred_hist_length',]
+# Your code for reading data...
 
-# Perform frequency encoding for each column
-for column in columns_to_encode:
-    instances_to_predict = frequency_encoding(instances_to_predict, column)
-
-# Drop the original categorical columns
-instances_to_predict.drop(columns=columns_to_encode, inplace=True)
-
-# Standardize the features
-scaler = StandardScaler()
-instances_to_predict_scaled = scaler.fit_transform(instances_to_predict)
-
-# Simulated training data and labels
-# Replace these with your actual training data and labels
-X_train = np.random.rand(10, instances_to_predict_scaled.shape[1])
-y_train = np.random.randint(0, 2, 10)  # Random binary labels
+# Your code for data preprocessing...
 
 # Train the AdaBoostClassifier model
 gb_model1 = AdaBoostClassifier()
 gb_model1.fit(X_train, y_train)
 gb_model2 = DecisionTreeClassifier()
 gb_model2.fit(X_train, y_train)
-# Predict Trust Level
-predictions1 = gb_model1.predict(instances_to_predict_scaled)
-predictions2 = gb_model2.predict(instances_to_predict_scaled)
 
-# Print the predictions
-print("Case 1: Predicted Loan grade is", predictions1)
-print("Case 2: Predicted Loan grade is", predictions2)
+# Save the models
+with open('model1.pkl', 'wb') as file:
+    pickle.dump(gb_model1, file)
+
+with open('model2.pkl', 'wb') as file:
+    pickle.dump(gb_model2, file)
+
+# Load the models
+with open('model1.pkl', 'rb') as file:
+    loaded_model1 = pickle.load(file)
+
+with open('model2.pkl', 'rb') as file:
+    loaded_model2 = pickle.load(file)
+
+# Function to preprocess data and make predictions
+def preprocess_and_predict(input_data):
+    # Your preprocessing code...
+    predictions1 = loaded_model1.predict(input_data)
+    predictions2 = loaded_model2.predict(input_data)
+    return predictions1, predictions2
+
+# Your Streamlit app code...
+
 
 import pickle
 

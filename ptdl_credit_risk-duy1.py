@@ -566,3 +566,32 @@ with open(model_path, 'rb') as file:
 # Sử dụng mô hình để dự đoán
 predictions = loaded_model.predict(X_test)
 print(predictions)
+def main():
+    st.title("Loan Grade Prediction")
+    st.write("This app predicts the loan grade based on user input.")
+    
+    # Add input fields for user data
+    st.sidebar.header("Input Data")
+    person_age = st.sidebar.number_input("Person Age", min_value=0, max_value=100, step=1)
+    person_income = st.sidebar.number_input("Person Income", min_value=0, step=1)
+    person_home_ownership = st.sidebar.selectbox("Person Home Ownership", ["RENT", "OWN", "MORTGAGE"])
+    person_emp_length = st.sidebar.number_input("Person Employment Length", min_value=0, step=1)
+    loan_intent = st.sidebar.selectbox("Loan Intent", ["HOMEIMPROVEMENT", "EDUCATION", "PERSONAL", "VENTURE"])
+    loan_amnt = st.sidebar.number_input("Loan Amount", min_value=0, step=1)
+    loan_int_rate = st.sidebar.number_input("Loan Interest Rate", min_value=0.0, step=0.01)
+    loan_status = st.sidebar.number_input("Loan Status", min_value=0, max_value=1, step=1)
+    loan_percent_income = st.sidebar.number_input("Loan Percent Income", min_value=0.0, step=0.01)
+    cb_person_default_on_file = st.sidebar.selectbox("Person Default on File", ["Y", "N"])
+    cb_person_cred_hist_length = st.sidebar.number_input("Credit History Length", min_value=0, step=1)
+    
+    # Make predictions using the trained models
+    predictions1 = gb_model1.predict(instances_to_predict_scaled)
+    predictions2 = gb_model2.predict(instances_to_predict_scaled)
+    
+    # Display the predictions
+    st.subheader("Predictions")
+    st.write("Case 1: Predicted Loan grade is", predictions1)
+    st.write("Case 2: Predicted Loan grade is", predictions2)
+
+if __name__ == "__main__":
+    main()

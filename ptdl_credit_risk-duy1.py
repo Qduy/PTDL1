@@ -552,7 +552,8 @@ model_path = 'https://colab.research.google.com/drive/1eKbH8Yaz_fIhKHsiBuaow4MVo
 with open(model_path, 'wb') as file:
     pickle.dump(model, file)
 
-model_path = 'model_path = '/content/drive/My Drive/model.pkl'
+model_path = "model_path = '/content/drive/My Drive/model.pkl'"
+
 with open(model_path, 'rb') as file:
     loaded_model = pickle.load(file)
 

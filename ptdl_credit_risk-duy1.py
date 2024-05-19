@@ -21,6 +21,13 @@ import warnings
 
 # Ignoring warnings
 warnings.filterwarnings('ignore')
+pip install scikit-learn
+pip install imbalanced-learn
+pip install numpy
+pip install pandas
+pip install seaborn
+pip install plotly
+pip install streamlit
 
 
 from sklearn.metrics import classification_report

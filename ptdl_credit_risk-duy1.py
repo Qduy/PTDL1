@@ -560,7 +560,7 @@ with open(model_path, 'rb') as file:
 # Sử dụng mô hình để dự đoán
 predictions = loaded_model.predict(X_test)
 print(predictions)
-'
+
 with open(model_path, 'rb') as file:
     loaded_model = pickle.load(file)
 
